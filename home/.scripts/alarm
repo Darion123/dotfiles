@@ -1,0 +1,46 @@
+#!/bin/sh
+r=true
+n=0
+time(){
+if [ $1 -lt 60 ]
+then
+	printf "%ds" $1
+elif [ $1 -lt 3600 ]
+then
+	printf "%dm" $(($1/60))
+else
+	printf "%dh" $(($1/3600))
+fi
+}
+func(){
+		while [ $n -lt $seconds ]
+		do
+			left=$(($seconds-$n))
+			echo $(time $left) > alarm-state
+			sleep 1 && n=$((n+=1))
+		done
+}
+case $1 in
+	-s)
+		seconds=$2
+		;;
+	-m)
+		seconds=$(($2*60))
+		;;
+	-h)
+		seconds=$(($2*3600))
+		;;
+	--song)
+		echo Work in progress preto
+		r=false
+		;;
+	clean)
+		echo "" > ~/.scripts/alarm-state
+		r=false
+		;;
+	*)
+		cat ~/.scripts/alarm-state
+		r=false
+		;;
+esac
+[ $r = true ] && func && echo "" > alarm-state && mpv --no-video ~/.scripts/programs/alarm.mp3

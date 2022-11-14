@@ -1,0 +1,22 @@
+Print
+	scrot ~/Pictures/%Y-%m-%d-%T-screenshot.png && notify-send "Scrot" -u low 'Print Taken!'
+mod4 + Print
+	scrot ~/Pictures/%Y-%m-%d-%T-screenshot.png --select && notify-send "Scrot" -u low 'Print Taken!'
+mod4 + shift + n
+	nvidia-settings &
+mod4 + shift + g
+	xclip -sel c < ~/.gitkey
+mod4 + g
+	st -e gotop
+XF86AudioRaiseVolume
+	pactl set-sink-volume @DEFAULT_SINK@ +10% && notify-send "volume: $(sh ~/.scripts/volume.sh)%" -u low -i volume-mute -r 100 -t 500 
+XF86AudioLowerVolume
+	pactl set-sink-volume @DEFAULT_SINK@ -10% && notify-send "volume: $(sh ~/.scripts/volume.sh)%" -u low -i volume-mute -r 100 -t 500
+XF86AudioMute
+	pactl set-sink-mute @DEFAULT_SINK@ toggle && notify-send "volume: toggle" -u low -i volume-mute -r 100 -t 1500
+XF86AudioPrev
+	playerctl previous
+XF86AudioNext
+	playerctl next
+XF86AudioPlay
+	playerctl play-pause

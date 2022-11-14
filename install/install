@@ -1,0 +1,21 @@
+#!/bin/sh
+case $1 in
+	"set")
+		cp -r colorschemes/$2/.Xresources ~
+		cp -r colorschemes/$2/alacritty ~/.config
+		;;
+	"full")
+		cp -r colorschemes/$2/.Xresources ~
+		cp -r colorschemes/$2/alacritty ~/.config
+		for i in $(ls colorschemes)
+		do
+			sed -i "s/$i.h/$2.h/" ../suckless/dwm/config.h
+		done
+		cd ../suckless/dwm/ && sudo make clean install
+		;;
+	*)
+		printf "uso:\n./install set [colorscheme]\nOu:\n./install full [colorschme]"
+		printf "colorschemes disponiveis:\n"
+		echo $(ls colorschemes)
+		;;
+	esac
